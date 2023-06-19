@@ -1,58 +1,13 @@
-{% comment %} 
-head 는 문서 정보를 가지고 있지만, 
-웹 페이지에서 보이지 않는 정보들을 담는 영역 
+{% extends 'blog/base.html' %}
 
-body 란 웹 페이지에 직접적으로 보이는 내용이 들어갑니다. 
-웹 페이지의 내용은 모두 이 body태그안에 들어갑니다.
-
-<head>는 브라우저에 페이지에 대한 설정들을 알려주고,
-<body>는 실제 페이지에 보여줄 내용을 알려줍니다.
-{% endcomment %}
-
-{% comment %} 
-<h1>A heading</h1> - 큰 제목
-<h2>A sub-heading</h2> - 중 제목
-<h3>A sub-sub-heading</h3> - 소 제목... <h6>레벨까지 사용할 수 있습니다.
-<em>text</em> - 텍스트 기울기 (Italic)
-<strong>text</strong> - 텍스트를 두껍게(Bold)
-<br /> - 줄바꿈 (br은 스스로 닫히는 태그로 속성을 사용할 수 없습니다)
-<a href="http://djangogirls.org">link</a> - 하이퍼링크 걸기
-<ul><li>first item</li><li>second item</li></ul>- 목록 만들기
-<div></div> - 페이지 섹션
-{% endcomment %}
-
-
-
-{% load static %}
-
-<html>
-    <head>
-        <title>Django Girls blog</title>
-        <link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
-    </head>
-    <body>
-        <div class="page-header">
-            <h1><a href="/">Django Girls Blog</a></h1>
-        </div>
-        
-        <div class="content container">
-            <div class="row">
-                <div class="col-md-8">
-                    {% for post in posts %}
-                        <div class="post">
-                            <div class="date">
-                                <p>published: {{ post.published_date }}</p>
-                            </div>
-                            <h1><a href="">{{ post.title }}</a></h1>
-                            <p>{{ post.text|linebreaksbr }}</p>
-                        </div>
-                    {% endfor %}
-                </div>
+{% block content %}
+    {% for post in posts %}
+        <div class="post">
+            <div class="date">
+                {{ post.published_date }}
             </div>
+            <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+            <p>{{ post.text|linebreaksbr }}</p>
         </div>
-    </body>
-</html>
-
+    {% endfor %}
+{% endblock %}
